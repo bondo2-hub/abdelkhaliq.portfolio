@@ -1,122 +1,962 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <title>Ahmed Mohammed | Modern Portfolio</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <title>Portfolio</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #FF6584;
+            --dark: #0a0a0a;
+            --darker: #080808;
+            --light: #f5f5f5;
+            --gray: #8a8a8a;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            background: var(--darker);
+            color: var(--light);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(108, 99, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 101, 132, 0.1) 0%, transparent 20%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Header styling */
+        .header {
+            position: fixed;
+            top: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 70px;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: headerElasticGrow 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .header:hover {
+            transform: translateX(-50%) translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(108, 99, 255, 0.3);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+            opacity: 0;
+            animation: fadeInLogo 0.8s ease-out 1.2s forwards;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+
+
+        .nav-links {
+            display: flex;
+            gap: 0.8rem;
+            padding: 0.3rem;
+            border-radius: 30px;
+            opacity: 0;
+            animation: fadeInNav 0.8s ease-out 1.4s forwards;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            white-space: nowrap;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            background: rgba(108, 99, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 10%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 700px;
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero h4 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            opacity: 0;
+            animation: fadeUp 1s ease 0.2s forwards;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.4s forwards;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            color: var(--gray);
+            max-width: 600px;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.6s forwards;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeUp 1s ease 0.8s forwards;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            outline: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            text-decoration: none;
+            box-shadow: 0 0 20px rgba(108, 99, 255, 0.3), 0 0 40px rgba(255, 101, 132, 0.2);
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 30px rgba(108, 99, 255, 0.5), 0 0 60px rgba(255, 101, 132, 0.4), 0 0 90px rgba(108, 99, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:hover::before {
+            width: 100%;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            color: var(--light);
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .hero-image {
+            position: absolute;
+            right: 10%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 35%;
+            max-width: 500px;
+            opacity: 0;
+            animation: fadeIn 1s ease 1s forwards;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Quick links styling */
+        .quick-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            opacity: 0;
+            animation: fadeUp 1s ease 1s forwards;
+        }
+
+        .quick-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: var(--transition);
+            padding: 0.5rem;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            animation: fadeInQuickLink 0.6s ease-out forwards;
+        }
+
+        .quick-links a:nth-child(1) { animation-delay: 1.6s; }
+        .quick-links a:nth-child(2) { animation-delay: 1.8s; }
+        .quick-links a:nth-child(3) { animation-delay: 2.0s; }
+
+        .quick-links a:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+            background: rgba(108, 99, 255, 0.1);
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: 8rem 5%;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-title h2 span {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .project-card {
+            background: rgba(20, 20, 20, 0.5);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: var(--transition);
+            transform: translateY(50px);
+            opacity: 0;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .project-card.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .project-image {
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-content p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .project-links a:hover {
+            color: var(--primary);
+        }
+
+        .view-more {
+            display: flex;
+            justify-content: center;
+            margin-top: 4rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 8rem 5%;
+            background: rgba(10, 10, 10, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 80% 30%, rgba(108, 99, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 20% 70%, rgba(255, 101, 132, 0.05) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .contact-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-content h2 span {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .contact-content p {
+            color: var(--gray);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-decoration: none;
+            color: var(--light);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px);
+            background: rgba(108, 99, 255, 0.1);
+            border-color: rgba(108, 99, 255, 0.2);
+        }
+
+        .social-link i {
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .social-link:hover i {
+            color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 2rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--gray);
+            font-size: 0.9rem;
+            height: 90px;
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Parallax elements */
+        .parallax-element {
+            position: absolute;
+            z-index: -1;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 8rem;
+            }
+
+            .hero-content {
+                margin-bottom: 3rem;
+            }
+
+            .cta-buttons {
+                justify-content: center;
+            }
+
+            .quick-links {
+                justify-content: center;
+                margin-top: 2.5rem;
+            }
+
+            .header {
+                width: 50px;
+                padding: 0.8rem 1.5rem;
+                gap: 1.5rem;
+                animation: headerElasticGrowTablet 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            }
+
+            .nav-links {
+                gap: 0.6rem;
+                padding: 0.2rem;
+            }
+
+            .nav-links a {
+                font-size: 0.9rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 10rem;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero-content {
+                margin-bottom: 2rem;
+            }
+
+            .cta-buttons {
+                justify-content: center;
+                margin-bottom: 2.5rem;
+            }
+
+            .quick-links {
+                justify-content: center;
+                margin-top: 3rem;
+                gap: 2rem;
+            }
+
+            .quick-links a {
+                width: 60px;
+                height: 60px;
+                font-size: 1.8rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .social-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .header {
+                width: 50px;
+                min-width: 280px;
+                padding: 0.7rem 1.2rem;
+                gap: 1rem;
+                animation: headerElasticGrowMobile 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            }
+
+            .nav-links {
+                gap: 0.5rem;
+                padding: 0.15rem;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+                padding: 0.3rem 0.6rem;
+            }
+
+            .logo img {
+                height: 35px;
+            }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+        }
+
+        /* Header Elastic Animation */
+        @keyframes headerElasticGrow {
+            0% {
+                width: 50px;
+            }
+            100% {
+                width: 1000px;
+            }
+        }
+
+        /* Fade In Animations */
+        @keyframes fadeInLogo {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeInNav {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes headerElasticGrowTablet {
+            0% {
+                width: 50px;
+            }
+            100% {
+                width: 600px;
+            }
+        }
+
+        @keyframes headerElasticGrowMobile {
+            0% {
+                width: 50px;
+            }
+            100% {
+                width: 90%;
+            }
+        }
+
+        @keyframes fadeInQuickLink {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Drifty Scrolling Styles */
+        .drifty-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .drifty-content {
+            position: relative;
+            width: 100%;
+            will-change: transform;
+        }
+    </style>
 </head>
+
 <body>
-    <section id="header">
-        <div class="header">
-            <div class="quick-nav">
-                <a href="#intro">INTRODUCTION</a>
-                <a href="#projects">PROJECTS</a>
-                <a href="#contact">CONTACT</a>
-            </div>
-
-            <div class="quick-links">
-                <a href="https://github.com/bondo2-hub"><i class='bx bxl-github'></i></a>
-                <a href="https://www.linkedin.com/in/ahmed-mohammed-32355133a/"><i class='bx bxl-linkedin' ></i></a>
-                <a href="https://www.instagram.com/bondo2.___/"><i class='bx bxl-instagram' ></i></a>
-            </div>
-        </div>
-    </section>
-
-    <section aria-labelledby="intro" id="intro">
-        <div class="intro">
-            <div class="items">
-                <div>
-                    <h1>
-                        Hey, <br />
-                        I'm <span>Ahmed</span> <br />
-                        Full-stack Developer
-                      </h1>
-    
-                      <div class="btn-holder">
-                        <a class='contact-btn' href="#"><b>Contact</b></a>
-                      </div>
-                      
+    <div class="drifty-wrapper">
+        <div class="drifty-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="logo">
+                    <img src="https://i.postimg.cc/rsZvG3MK/Your-paragraph-text-1-removebg-preview.png" alt="Logo" style="height: 40px; width: auto;">
                 </div>
+                <nav class="nav-links">
+                    <a href="#intro">INTRODUCTION</a>
+                    <a href="#projects">PROJECTS</a>
+                    <a href="#contact">CONTACT</a>
+                </nav>
+            </header>
+
+            <!-- Hero Section -->
+            <section id="intro" class="hero">
+                <div class="hero-content">
+                    <h4>Hello, I'm</h4>
+                    <h1>Ahmed Abdelkhaliq<br><span>Back-End Developer</span></h1>
+                    <p>I create modern, responsive web applications with cutting-edge technologies. Passionate about solving
+                        complex problems through elegant code and intuitive user experiences.</p>
+                    <div class="cta-buttons">
+                        <a href="#contact" class="btn btn-primary">Contact Me</a>
+                        <a href="#projects" class="btn btn-secondary">View Projects</a>
+                    </div>
+                    <div class="quick-links">
+                        <a href="https://github.com/bondo2-hub"><i class='bx bxl-github'></i></a>
+                        <a href="https://www.linkedin.com/in/ahmed-mohammed-32355133a/"><i class='bx bxl-linkedin'></i></a>
+                        <a href="https://www.instagram.com/bondo2.___/"><i class='bx bxl-instagram'></i></a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="projects">
+                <div class="section-title">
+                    <h2>Projects I've <span>Worked</span> On</h2>
+                    <p>Explore my recent projects showcasing my skills in modern web development</p>
+                </div>
+
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80"
+                                alt="Nexus Project">
+                        </div>
+                        <div class="project-content">
+                            <h3>Nexus</h3>
+                            <p>A modern e-commerce platform with real-time inventory management and AI-powered
+                                recommendations.</p>
+                            <div class="project-links">
+                                <a href="https://bondo2-hub.github.io/Nexus/"><i class='bx bx-link-external'></i> Live Demo</a>
+                                <a href="https://github.com/bondo2-hub/Nexus"><i class='bx bxl-github'></i> Source Code</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="https://images.unsplash.com/photo-1463171379579-3fdfb86d6285?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
+                                alt="QuantumWave Project">
+                        </div>
+                        <div class="project-content">
+                            <h3>QuantumWave</h3>
+                            <p>Data visualization platform for quantum computing simulations with interactive 3D models.</p>
+                            <div class="project-links">
+                                <a href="#"><i class='bx bx-link-external'></i> Live Demo</a>
+                                <a href="#"><i class='bx bxl-github'></i> Source Code</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
+                                alt="Pyramida Project">
+                        </div>
+                        <div class="project-content">
+                            <h3>Pyramida</h3>
+                            <p>Project management tool with gamified task completion and team collaboration features.</p>
+                            <div class="project-links">
+                                <a href="#"><i class='bx bx-link-external'></i> Live Demo</a>
+                                <a href="#"><i class='bx bxl-github'></i> Source Code</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-image">
+                            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
+                                alt="eMessage Project">
+                        </div>
+                        <div class="project-content">
+                            <h3>eMessage</h3>
+                            <p>Secure messaging platform with end-to-end encryption and self-destructing messages.</p>
+                            <div class="project-links">
+                                <a href="#"><i class='bx bx-link-external'></i> Live Demo</a>
+                                <a href="#"><i class='bx bxl-github'></i> Source Code</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="view-more">
+                    <button class="btn btn-secondary">View More Projects</button>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="contact">
+                <div class="contact-content">
+                    <h2>Interested in my <span>work?</span></h2>
+                    <p>How do you like your coffee? Let's discuss how we can create something amazing together.</p>
+
+                    <div class="social-links">
+                        <a href="https://github.com/bondo2-hub" class="social-link">
+                            <i class='bx bxl-github'></i>
+                            <span>GitHub</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/ahmed-mohammed-32355133a/" class="social-link">
+                            <i class='bx bxl-linkedin'></i>
+                            <span>LinkedIn</span>
+                        </a>
+                        <a href="https://www.instagram.com/bondo2.___/" class="social-link">
+                            <i class='bx bxl-instagram'></i>
+                            <span>Instagram</span>
+                        </a>
+                        <a href="https://x.com/im_dnaa" class="social-link">
+                            <i class='bx bxl-twitter'></i>
+                            <span>Twitter</span>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class='bx bxl-whatsapp'></i>
+                            <span>WhatsApp</span>
+                        </a>
+                        <a href="mailto:ahmed@example.com" class="social-link">
+                            <i class='bx bxl-gmail'></i>
+                            <span>Email</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <p>© 2025 Ahmed Abdelkhaliq. All rights reserved.</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // Drifty Scrolling Implementation
+        class DriftyScroll {
+            constructor() {
+                this.wrapper = document.querySelector('.drifty-wrapper');
+                this.content = document.querySelector('.drifty-content');
+                this.data = {
+                    ease: 0.1,
+                    current: 0,
+                    previous: 0,
+                    rounded: 0
+                };
+                this.maxScroll = 0;
+
+                this.init();
+            }
+
+            init() {
+                this.setBodyHeight();
+                this.addEventListeners();
+                this.scroll();
+            }
+
+            setBodyHeight() {
+                const contentHeight = this.content.getBoundingClientRect().height;
+                const viewportHeight = window.innerHeight;
+                this.maxScroll = Math.max(0, contentHeight - viewportHeight);
                 
-                <div class="intro-icon">
-                    <img src="https://i.postimg.cc/PrLWKfrB/businessman-holding-cup.png" alt="Profile Picture">
-                </div>
-            </div>
-        </div>
-    </section>
+                // Set body height to enable scrolling
+                document.body.style.height = `${contentHeight}px`;
+            }
 
-    <section aria-labelledby="projects" id="projects">
-        <div class="title">
-            <h1>Projects I've <span>worked</span> on</h1>
-            
-        </div>
-        
-        <div class="projects">
-            
-                <div class="project-container">
+            addEventListeners() {
+                window.addEventListener('resize', this.setBodyHeight.bind(this));
+            }
 
-                    <div class="project">   
-                        <a href="https://bondo2-hub.github.io/Nexus/"><img src="https://i.postimg.cc/Bb6BbGZB/Screenshot-1.png" alt="Project 1"></a>
-                        
-                        <h2>Nexus</h2>
-                    </div>
+            scroll() {
+                this.data.current = window.scrollY;
+                this.data.previous += (this.data.current - this.data.previous) * this.data.ease;
+                this.data.rounded = Math.round(this.data.previous * 100) / 100;
 
-                    <div class="project">
-                        <a href="https://bondo2-hub.github.io/QuantumWave/">
-                            <img src="https://i.postimg.cc/4xSnt7vc/Screenshot-3.png" alt="Project 1">
-                        </a>
-                        
-                        <h2>QuantumWave</h2>
-                    </div>
+                // Clamp to bounds
+                this.data.rounded = Math.max(0, Math.min(this.data.rounded, this.maxScroll));
 
-                    <div class="project">
-                        <a href="https://bondo2-hub.github.io/unpublished/">
-                            <img src="https://i.postimg.cc/ZRcS8XkQ/Screenshot-4.png" alt="Project 1">
-                        </a>
-                        
-                        <h2>Pyramida</h2>
-                    </div>
+                this.content.style.transform = `translate3d(0, -${this.data.rounded}px, 0)`;
 
-                    <div class="project">
-                        <a href="#">
-                            <img src="https://i.postimg.cc/bw7DWSGh/Screenshot-5.png" alt="Project 1">
-                        </a>
-    
-                        <h2>eMessage</h2>
-                    </div>
-                </div>
-            </div>
+                requestAnimationFrame(this.scroll.bind(this));
+            }
+        }
 
-            <div class="view_projects-btn-holder">
-                <button class="view_projects-btn"><a href="#"><b>View More <i class='bx bx-chevron-right' ></i></b></a></button>
-            </div>
-    </section>
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize Drifty Scroll
+            const driftyScroll = new DriftyScroll();
 
-    <section aria-labelledby="intrest" id="contact">
-        <div class="intrest">
-            <div class="t1">
-                <h1><b>Interested in any of my <span>work?</span></b></h1>
-            </div>
+            // Add hover effect to project cards
+            const projectCards = document.querySelectorAll('.project-card');
+            projectCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-10px)';
+                    card.style.boxShadow = '0 25px 50px rgba(0, 0, 0, 0.5)';
+                });
 
-            <div class="t2">
-                <p>How do you like your coffee.?</p>
-            </div>
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0)';
+                    card.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)';
+                });
+            });
 
-            <div class="sep"></div>
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    const headerHeight = document.querySelector('.header').offsetHeight;
+                    const offset = headerHeight + 20;
+                    
+                    window.scrollTo({
+                        top: target.offsetTop - offset,
+                        behavior: 'smooth'
+                    });
+                });
+            });
 
-            <div class="contacts">
-                <a href='https://www.instagram.com/bondo2.___/'><i class='bx bxl-instagram' ></i> Instagram</a>
-                <a href='https://x.com/im_dnaa'><i class='bx bxl-twitter'></i> Twitter</a>
-                <a href='https://github.com/bondo2-hub'><i class='bx bxl-github' ></i> Github</a>
-                <a href='#'><i class='bx bxl-whatsapp' ></i> Whatsapp</a>
-                <a href='https://www.linkedin.com/in/ahmed-mohammed-32355133a/'><i class='bx bxl-linkedin-square' ></i> Linkdin</a>
-                <a href='https://mail.google.com/mail/u/0/#inbox?compose=GTvVlcRzCpQxChzkzsVtmqBGPvdwKCVmQBWDmFkNpFNhfBnQlspLppdjCGZXKsGKjgjDxBCDQHdnB'><i class='bx bxl-gmail' ></i> Email</a>
-            </div>
-        </div>
-    </section>
+            // Intersection Observer for project cards animation
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.2
+            });
+
+            projectCards.forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
 </body>
-    <script src="script.js"></script>
 </html>
