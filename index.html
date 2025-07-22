@@ -555,63 +555,146 @@
             .hero {
                 flex-direction: column;
                 text-align: center;
-                padding-top: 10rem;
+                padding-top: 4rem;
+                padding-left: 0.6rem;
+                padding-right: 0.6rem;
             }
 
             .hero h1 {
-                font-size: 3rem;
+                font-size: 1.5rem;
+                line-height: 1.1;
+                margin-bottom: 0.6rem;
+            }
+
+            .hero h4 {
+                font-size: 0.8rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .hero p {
+                font-size: 0.75rem;
+                line-height: 1.3;
+                margin-bottom: 1rem;
             }
 
             .hero-content {
-                margin-bottom: 2rem;
+                margin-bottom: 1rem;
             }
 
             .cta-buttons {
                 justify-content: center;
-                margin-bottom: 2.5rem;
+                margin-bottom: 1rem;
+                gap: 0.6rem;
+            }
+
+            .btn {
+                padding: 0.4rem 1rem;
+                font-size: 0.75rem;
             }
 
             .quick-links {
                 justify-content: center;
-                margin-top: 3rem;
-                gap: 2rem;
+                margin-top: 1rem;
+                gap: 0.6rem;
             }
 
             .quick-links a {
-                width: 60px;
-                height: 60px;
-                font-size: 1.8rem;
+                width: 32px;
+                height: 32px;
+                font-size: 1rem;
             }
 
-            .projects-grid {
-                grid-template-columns: 1fr;
+            .header {
+                width: 50px;
+                min-width: 200px;
+                padding: 0.3rem 0.6rem;
+                gap: 0.5rem;
+                height: 38px;
+                animation: headerElasticGrowMobile 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            }
+
+            .nav-links {
+                gap: 0.2rem;
+                padding: 0.1rem;
+            }
+
+            .nav-links a {
+                font-size: 0.65rem;
+                padding: 0.15rem 0.3rem;
+            }
+
+            .logo img {
+                height: 18px;
+            }
+
+            .projects {
+                padding: 2.5rem 0.6rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.3rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .section-title p {
+                font-size: 0.75rem;
+            }
+
+            .project-card {
+                margin-bottom: 1rem;
+            }
+
+            .project-content {
+                padding: 0.8rem;
+            }
+
+            .project-content h3 {
+                font-size: 1rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .project-content p {
+                font-size: 0.75rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .project-links a {
+                font-size: 0.7rem;
+                padding: 0.25rem 0.5rem;
+            }
+
+            .contact {
+                padding: 2.5rem 0.6rem;
+            }
+
+            .contact-content h2 {
+                font-size: 1.3rem;
+                margin-bottom: 0.6rem;
+            }
+
+            .contact-content p {
+                font-size: 0.75rem;
+                margin-bottom: 1.2rem;
             }
 
             .social-links {
                 flex-direction: column;
                 align-items: center;
+                gap: 0.6rem;
             }
 
-            .header {
-                width: 50px;
-                min-width: 280px;
-                padding: 0.7rem 1.2rem;
-                gap: 1rem;
-                animation: headerElasticGrowMobile 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+            .social-link {
+                padding: 0.5rem 1rem;
+                font-size: 0.75rem;
             }
 
-            .nav-links {
-                gap: 0.5rem;
-                padding: 0.15rem;
+            .social-link i {
+                font-size: 1.1rem;
             }
 
-            .nav-links a {
-                font-size: 0.85rem;
-                padding: 0.3rem 0.6rem;
-            }
-
-            .logo img {
-                height: 35px;
+            .footer {
+                padding: 1rem 0.6rem;
+                font-size: 0.7rem;
             }
         }
 
@@ -747,8 +830,9 @@
                     <h2>Projects I've <span>Worked</span> On</h2>
                     <p>Explore my recent projects showcasing my skills in modern web development</p>
                 </div>
+                Error: Can't view items
 
-                <div class="projects-grid">
+                <!-- <div class="projects-grid">
                     <div class="project-card">
                         <div class="project-image">
                             <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1674&q=80"
@@ -768,14 +852,16 @@
                     <div class="project-card">
                         <div class="project-image">
                             <img src="https://images.unsplash.com/photo-1463171379579-3fdfb86d6285?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80"
-                                alt="QuantumWave Project">
+                                alt="Deja Project">
                         </div>
                         <div class="project-content">
-                            <h3>QuantumWave</h3>
-                            <p>Data visualization platform for quantum computing simulations with interactive 3D models.</p>
+                            <h3>Deja</h3>
+                            <p>Deja is an indexed, hierarchical data structure designed for efficient categorization and retrieval of data. It enables
+                            structured storage using a dictionary-based mapping, where each entry is assigned a unique index, allowing systematic
+                            organization and quick access.</p>
                             <div class="project-links">
-                                <a href="#"><i class='bx bx-link-external'></i> Live Demo</a>
-                                <a href="#"><i class='bx bxl-github'></i> Source Code</a>
+                                <a href="https://github.com/bondo2-hub/deja"><i class='bx bx-link-external'></i> Live Demo</a>
+                                <a href="https://github.com/bondo2-hub/deja"><i class='bx bxl-github'></i> Source Code</a>
                             </div>
                         </div>
                     </div>
@@ -809,7 +895,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="view-more">
                     <button class="btn btn-secondary">View More Projects</button>
@@ -831,7 +917,7 @@
                             <i class='bx bxl-linkedin'></i>
                             <span>LinkedIn</span>
                         </a>
-                        <a href="https://www.instagram.com/bondo2.___/" class="social-link">
+                        <a href="https://www.instagram.com/abdelkhaliq._" class="social-link">
                             <i class='bx bxl-instagram'></i>
                             <span>Instagram</span>
                         </a>
